@@ -1,0 +1,32 @@
+set hive.cli.print.header=true;
+--ALTER TABLE pubg_new ADD COLUMNS (WinQuartiles Int);
+INSERT OVERWRITE TABLE pubg_new
+SELECT 
+         Id ,
+         groupId ,
+         matchId ,
+         assists ,
+         boosts ,
+        `damageDealt` ,
+        `DBNOs`,
+        `headshotKills` ,
+        `heals` ,
+        `killPlace` ,
+        `killPoints`,
+        `kills` ,
+        `killStreaks` ,
+        `longestKill`,
+        `maxPlace` ,
+        `numGroups` ,
+        `revives`,
+        `rideDistance` ,
+        `roadKills` ,
+        `swimDistance` ,
+        `teamKills` ,
+        `vehicleDestroys` ,
+        `walkDistance` ,
+        `weaponsAcquired` ,
+        `winPoints` ,
+        `winPlacePerc`, match_type,WinORLose,
+	if(winplaceperc >= 0.75, 4,if (winplaceperc >= 0.50 AND winplaceperc < 75 ,3,if(winplaceperc >=0.25 AND winplaceperc < 0.50, 2,1))) 
+as WinQuartiles from pubg_new; 

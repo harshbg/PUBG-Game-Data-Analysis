@@ -1,0 +1,4 @@
+set hive.cli.print.header=true;
+select avg(kills) as Average_kills, min(kills) as min_kills, max(kills) as Max_kills, 
+variance(kills) as variance, stddev_pop(kills) as Standard_Deviation, 
+corr(kills,winplaceperc) as Correlation from pubg_new ;

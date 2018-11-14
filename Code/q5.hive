@@ -1,0 +1,2 @@
+set hivevar:total=(select sum(kills) from pubg_new); 
+select kills/${hivevar: total}  from pubg_new order by kills desc limit 10;

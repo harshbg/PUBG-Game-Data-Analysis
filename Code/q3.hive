@@ -1,0 +1,34 @@
+
+set hive.cli.print.header=true;
+--ALTER TABLE pubg_new ADD COLUMNS (WinOrLose Int);
+INSERT OVERWRITE TABLE pubg_new
+SELECT 
+         Id ,
+         groupId ,
+         matchId ,
+         assists ,
+         boosts ,
+        `damageDealt` ,
+        `DBNOs`,
+        `headshotKills` ,
+        `heals` ,
+        `killPlace` ,
+        `killPoints`,
+        `kills` ,
+        `killStreaks` ,
+        `longestKill`,
+        `maxPlace` ,
+        `numGroups` ,
+        `revives`,
+        `rideDistance` ,
+        `roadKills` ,
+        `swimDistance` ,
+        `teamKills` ,
+        `vehicleDestroys` ,
+        `walkDistance` ,
+        `weaponsAcquired` ,
+        `winPoints` ,
+        `winPlacePerc`,
+	'match_type',	
+ if(winplaceperc = 1, 1,0) 
+as WinOrLose from pubg_new; 

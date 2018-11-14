@@ -1,0 +1,32 @@
+
+set hive.cli.print.header=true;
+INSERT OVERWRITE TABLE pubg_new
+SELECT 
+         Id ,
+         groupId ,
+         matchId ,
+         assists ,
+         boosts ,
+        `damageDealt` ,
+        `DBNOs`,
+        `headshotKills` ,
+        `heals` ,
+        `killPlace` ,
+        `killPoints`,
+        `kills` ,
+        `killStreaks` ,
+        `longestKill`,
+        `maxPlace` ,
+        `numGroups` ,
+        `revives`,
+        `rideDistance` ,
+        `roadKills` ,
+        `swimDistance` ,
+        `teamKills` ,
+        `vehicleDestroys` ,
+        `walkDistance` ,
+        `weaponsAcquired` ,
+        `winPoints` ,
+        `winPlacePerc`, if(numgroups > 50, 'solo',if (numgroups > 25 AND numgroups <= 50,'Duo',
+	'Squad')),WinORLose 
+as match_type from pubg_new; 

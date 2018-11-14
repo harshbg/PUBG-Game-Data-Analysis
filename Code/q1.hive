@@ -1,0 +1,4 @@
+set hive.cli.print.header=true;
+select avg(winplaceperc) as Average_Winperc, min(winplaceperc) as min_WinPerc, max(winplaceperc) as Max_WinPerc, 
+variance(winplaceperc) as variance, stddev_pop(winplaceperc) as Standard_Deviation 
+from pubg_new ;

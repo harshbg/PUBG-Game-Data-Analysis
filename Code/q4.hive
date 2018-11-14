@@ -1,0 +1,5 @@
+
+set hive.cli.print.header=true;
+select avg(kills) as Average_kills, avg(walkdistance) as wd_dist, avg(ridedistance) as rd_dist, 
+variance(walkdistance) as wd_var, stddev_pop(walkdistance) as wd_std,
+variance(ridedistance) as rd_var, stddev_pop(ridedistance) as rd_std  from pubg_new ;

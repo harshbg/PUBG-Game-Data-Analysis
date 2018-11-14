@@ -1,0 +1,31 @@
+DROP TABLE IF EXISTS pubg_new;
+CREATE TABLE `pubg_new`(
+         Id String,
+         groupId String,
+         matchId String,
+         assists String,
+         boosts Int,
+        `damageDealt` int,
+        `DBNOs` int,
+        `headshotKills` int,
+        `heals` int,
+        `killPlace` int,
+        `killPoints` int,
+        `kills` int,
+        `killStreaks` int,
+        `longestKill` int,
+        `maxPlace` int,
+        `numGroups` int,
+        `revives` int,
+        `rideDistance` int,
+        `roadKills` int,
+        `swimDistance` int,
+        `teamKills` int,
+        `vehicleDestroys` int,
+        `walkDistance` int,
+        `weaponsAcquired` int,
+        `winPoints` int,
+        `winPlacePerc` float)
+        ROW FORMAT DELIMITED
+        FIELDS TERMINATED BY ',';
+LOAD DATA LOCAL INPATH '/home/sidoza7802/train.csv' OVERWRITE INTO TABLE pubg_new;
