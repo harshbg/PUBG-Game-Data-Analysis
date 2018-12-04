@@ -1,0 +1,4 @@
+set hive.cli.print.header=true;
+select corr(weaponsacquired,winplaceperc) from pubg_new where match_type1='solo';
+select corr(weaponsacquired,winplaceperc) from pubg_new where match_type1='Duo';
+select corr(weaponsacquired,winplaceperc) from pubg_new where match_type1='Squad'

@@ -1,6 +1,6 @@
 
 set hive.cli.print.header=true;
---ALTER TABLE pubg_new ADD COLUMNS (WinOrLose Int);
+ALTER TABLE pubg_new ADD COLUMNS (WinOrLose Int);
 INSERT OVERWRITE TABLE pubg_new
 SELECT 
          Id ,

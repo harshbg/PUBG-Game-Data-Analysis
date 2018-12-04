@@ -1,0 +1,23 @@
+set hive.cli.print.header=true;
+select avg(boosts) as Average_boosts, min(boosts) as min_boosts, max(boosts) as Max_boosts, 
+variance(boosts) as variance, stddev_pop(boosts) as Standard_Deviation, 
+corr(boosts,winplaceperc) as Correlation from pubg_new ;
+
+set hive.cli.print.header=true;
+select avg(damagedealt) as Average_DD, min(damagedealt) as min_DD, max(damagedealt) as Max_DD, 
+variance(damagedealt) as variance, stddev_pop(damagedealt) as Standard_Deviation, 
+corr(damagedealt,winplaceperc) as Correlation from pubg_new ;
+
+set hive.cli.print.header=true;
+select avg(DBNOs) as Average_DBNOs, min(DBNOs) as min_DBNOs, max(DBNOs) as Max_DBNOs, 
+variance(DBNOs) as variance, stddev_pop(DBNOs) as Standard_Deviation, 
+corr(DBNOs,winplaceperc) as Correlation from pubg_new ;
+
+set hive.cli.print.header=true;
+select avg(headshotkills) as Average_HSK, min(headshotkills) as min_HSK, max(headshotkills) as Max_HSK, 
+variance(headshotkills) as variance, stddev_pop(headshotkills) as Standard_Deviation, 
+corr(headshotkills,winplaceperc) as Correlation from pubg_new ;
+
+set hive.cli.print.header=true;
+select avg(winplaceperc) as Average_WPP, min(winplaceperc) as min_WPP, max(winplaceperc) as Max_WPP,
+variance(winplaceperc) as variance, stddev_pop(winplaceperc) as Standard_Deviation from pubg_new ;

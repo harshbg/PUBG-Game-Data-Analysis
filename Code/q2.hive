@@ -1,5 +1,6 @@
 
 set hive.cli.print.header=true;
+--ALTER TABLE pubg_new ADD COLUMNS (Match_type1 string);
 INSERT OVERWRITE TABLE pubg_new
 SELECT 
          Id ,
@@ -27,6 +28,10 @@ SELECT
         `walkDistance` ,
         `weaponsAcquired` ,
         `winPoints` ,
-        `winPlacePerc`, if(numgroups > 50, 'solo',if (numgroups > 25 AND numgroups <= 50,'Duo',
-	'Squad')),WinORLose 
-as match_type from pubg_new; 
+        `winPlacePerc`,
+	`winOrLose`,
+	`winQuartiles`,
+	`match_type`,
+	`cluster`, if(numgroups > 50, 'solo',if (numgroups > 25 AND numgroups <= 50,'Duo',
+	'Squad')) 
+as match_type1 from pubg_new; 
