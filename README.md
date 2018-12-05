@@ -2,8 +2,7 @@
 
 ### An analysis of Player Unknown's Battle Grounds (PUBG) Game Data using **_Hive_** and **_Spark_**.
 
-The data for the analysis has been sourced from **[Kaggle](https://www.kaggle.com/c/pubg-finish-placement-prediction)**. You can also find the data files [here](https://github.com/harshbg/PUBG/tree/master/Data).
-
+The data for the analysis has been sourced from **[Kaggle](https://www.kaggle.com/c/pubg-finish-placement-prediction)**. 
 
 
 #### The analysis is focussed on answering questions stated below: 
