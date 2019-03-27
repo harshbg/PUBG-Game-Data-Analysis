@@ -7,68 +7,133 @@ The final presentation for the report can be found in [project presentation](htt
 * [Screenshots](#screenshots)
 * [Technologies and Tools](#technologies-and-tools)
 * [Setup](#setup)
-* [Process](#process)
 * [Code Examples](#code-examples)
 * [Features](#features)
 * [Status](#status)
-* [Inspiration](#inspiration)
 * [Contact](#contact)
 
 ## General info
-Add more general information about project. What the purpose of the project is? Motivation?
+
+The goal of the study was to learn data analysis using various big data tools. The professor had allowed us to select the dataset of own choice to analyze.
+All the members of our team were a great fan of PUBG mobile game and the game develeoper had released the data recently on Kaggle. So we decided to take it up for our project, that way we also have an analytics edge when playing the game. 
 
 ## Screenshots
-![Example screenshot](./img/screenshot.png)
+![Example screenshot](./img/Capture.PNG)
+![Example screenshot](./img/Capture1.PNG)
+![Example screenshot](./img/Capture2.PNG)
+![Example screenshot](./img/Capture3.PNG)
 
 ## Technologies and Tools
-* Tech 1 - version 1.0
-* Tech 2 - version 2.0
-* Tech 3 - version 3.0
+* Hive
+* Spark 
 
 ## Setup
 Describe how to install / setup your local environement / add link to demo version.
+The data for the analysis has been sourced from [Kaggle](https://www.kaggle.com/c/pubg-finish-placement-prediction). 
+All the codes used in the analysis can be accesed [here](https://github.com/harshbg/PUBG/tree/master/Code) and can be used to reproduce the result. 
+A detailed explaination of the various operations and the interpretition of the outputs can be found in the [project report](https://github.com/harshbg/PUBG/blob/master/Big%20Data%20Project%20-%20Group%207-%20Final.pdf).
 
-## Process
 
 ## Code Examples
 Show examples of usage:
 
 ````
+#Descriptive analysis
+set hive.cli.print.header=true;
+select avg(kills) as Average_kills, min(kills) as min_kills, max(kills) as Max_kills, 
+variance(kills) as variance, stddev_pop(kills) as Standard_Deviation, 
+corr(kills,winplaceperc) as Correlation from pubg_new ;
+````
 
+````
+#Correlation in Hive
+set hive.cli.print.header=true;
+select corr(weaponsacquired,winplaceperc) from pubg_new where match_type1='solo';
+select corr(weaponsacquired,winplaceperc) from pubg_new where match_type1='Duo';
+select corr(weaponsacquired,winplaceperc) from pubg_new where match_type1='Squad'
+````
+
+````
+#Clusterin in Scala
+import org.apache.spark.ml.feature.VectorAssembler
+import org.apache.spark.ml.classification.LogisticRegression
+import org.apache.spark.mllib.evaluation.BinaryClassificationMetrics
+import org.apache.spark.mllib.regression.LabeledPoint
+import org.apache.spark.mllib.util.MLUtils
+import org.apache.spark.ml.classification.BinaryLogisticRegressionSummary
+import org.apache.spark.ml.clustering.KMeans
+import org.apache.spark.ml.evaluation.ClusteringEvaluator
+
+
+
+val inputfile = sql("select * from pubg_new")
+val Data=inputfile.select(inputfile("winorlose").as("label"),$"boosts",$"damageDealt",$"DBNOs",$"headshotKills",$"heals",$"killPlace",$"killPoints",$"kills",$"killStreaks",$"longestKill",$"maxPlace",$"numGroups",$"revives",$"rideDistance",$"roadKills",$"swimDistance",$"teamKills",$"vehicleDestroys",$"walkDistance",$"weaponsacquired",$"winpoints",$"winorlose",$"winquartiles")
+
+val assembler = new VectorAssembler().setInputCols(Array("boosts","damageDealt","DBNOs","headshotKills","heals","killPlace","killPoints","kills","killStreaks","longestKill","maxPlace","numGroups","revives","rideDistance","roadKills","swimDistance","teamKills","vehicleDestroys","walkDistance","weaponsacquired","winpoints","winorlose","winquartiles")).setOutputCol("features")
+val data1 = assembler.transform(Data).select($"label",$"features")
+val kmeans = new KMeans().setPredictionCol("cluster").setFeaturesCol("features").setK(5).setInitSteps(40).setMaxIter(99) 
+val kmodel = kmeans.fit(data1)
+println(s"3,${kmodel.computeCost(data1)}") 
+println("Cluster centroids:")
+kmodel.clusterCenters.foreach(println)
+println(s"$3,${kmodel.computeCost(data1)}")
+val predictions = kmodel.summary.predictions
+predictions.orderBy("cluster").show()
+predictions.count()
+````
+
+````
+#Feature Importance
+import org.apache.spark.ml.feature.VectorAssembler
+import org.apache.spark.ml.regression.LinearRegression
+import org.apache.spark.ml.feature
+import org.apache.spark.ml.regression.RandomForestRegressor
+import org.apache.spark.ml.regression.{ RandomForestRegressor, RandomForestRegressionModel }
+import org.apache.spark.ml.feature.StandardScaler
+val inputfile = sql("select * from pubg_new")
+val Data=inputfile.select(inputfile("winplaceperc").as("label"),$"boosts",$"damageDealt",$"DBNOs",$"headshotKills",$"heals",$"killPlace",$"killPoints",$"kills",$"killStreaks",$"longestKill",$"maxPlace",$"numGroups",$"revives",$"rideDistance",$"roadKills",$"swimDistance",$"teamKills",$"vehicleDestroys",$"walkDistance",$"weaponsacquired",$"winpoints")
+val assembler = new VectorAssembler().setInputCols(Array("boosts","damageDealt","DBNOs","headshotKills","heals","killPlace","killPoints","kills","killStreaks","longestKill","maxPlace","numGroups","revives","rideDistance","roadKills","swimDistance","teamKills","vehicleDestroys","walkDistance","weaponsacquired","winpoints")).setOutputCol("features")
+val data1 = assembler.transform(Data).select($"label",$"features")
+
+
+
+val rf = new RandomForestRegressor
+val model: RandomForestRegressionModel = rf.fit(data1)
+// GET FEATURE IMPORTANCE
+val featImp = model.featureImportances
+val featureMetadata = data1.schema("features").metadata
+````
+````
+#Regression
+import org.apache.spark.ml.feature.VectorAssembler
+import org.apache.spark.ml.regression.LinearRegression
+import org.apache.spark.ml.feature
+import org.apache.spark.ml.feature.StandardScaler
+val inputfile = sql("select * from pubg_new")
+val Data=inputfile.select(inputfile("winplaceperc").as("label"),$"boosts",$"damageDealt",$"DBNOs",$"headshotKills",$"heals",$"killPlace",$"killPoints",$"kills",$"killStreaks",$"longestKill",$"maxPlace",$"numGroups",$"revives",$"rideDistance",$"roadKills",$"swimDistance",$"teamKills",$"vehicleDestroys",$"walkDistance",$"weaponsacquired",$"winpoints",$"winorlose")
+val assembler = new VectorAssembler().setInputCols(Array("boosts","damageDealt","DBNOs","headshotKills","heals","killPlace","killPoints","kills","killStreaks","longestKill","maxPlace","numGroups","revives","rideDistance","roadKills","swimDistance","teamKills","vehicleDestroys","walkDistance","weaponsacquired","winpoints","winorlose")).setOutputCol("features")
+val data1 = assembler.transform(Data).select($"label",$"features")
+val scaler = new StandardScaler().setInputCol("features").setOutputCol("scaledFeatures").setWithStd(true).setWithMean(false)
+val scalerModel = scaler.fit(data1)
+val scaledData = scalerModel.transform(data1)
+scaledData.show() 20, False
+scaledData.show(Int.MaxValue)
+scaledData.show(20, false)
+
+val lr = new LinearRegression()
+val lrModel = lr.fit(scaledData)
+println(s"Coefficients: ${lrModel.coefficients} Intercept: ${lrModel.intercept}")
+val trainingSummary = lrModel.summary
+println(s"numIterations: ${trainingSummary.totalIterations}")
+println(s"objectiveHistory: ${trainingSummary.objectiveHistory.toList}")
+trainingSummary.residuals.show()
+println(s"RMSE: ${trainingSummary.rootMeanSquaredError}")
+println(s"MSE: ${trainingSummary.meanSquaredError}")
+println(s"r2: ${trainingSummary.r2}")
 ````
 
 ## Features
-List of features ready and TODOs for future development
-* Awesome feature 1
-* Awesome feature 2
-* Awesome feature 3
-
-To-do list:
-* Wow improvement to be done 1
-* Wow improvement to be done 2
-
-## Status
-Project is: _in progress_, _finished_, _no longer continue_ and why?
-
-## Inspiration
-Add here credits. Project inspired by..., based on...
-
-## Contact
-Created by me and my teammate [Siddharth Oza](https://github.com/siddharthoza).
-
-If you loved what you read here and feel like we can collaborate to produce some exciting stuff, or if you
-just want to shoot a question, please feel free to connect with me on <a href="hello@gupta-harsh.com" target="_blank">email</a>, <a href="https://www.linkedin.com/in/harshbg/" target="_blank">LinkedIn</a>, or <a href="https://twitter.com/harshbg" target="_blank">Twitter</a>. My other projects can be found [here](http://www.gupta-harsh.com/projects/).
-
-
-### 
-
-
-The data for the analysis has been sourced from **[Kaggle](https://www.kaggle.com/c/pubg-finish-placement-prediction)**. 
-
-
-
-#### The analysis is focussed on answering questions stated below: 
-
+The analysis is focussed on answering questions stated below:
   * Does killing more people increases the chance of winning the game?
   * Can we predict the finishing position of a player in the game?
   * Can we predict the winner of the game?
@@ -76,7 +141,18 @@ The data for the analysis has been sourced from **[Kaggle](https://www.kaggle.co
   * How do we catch the cheaters in the game?
   * How does the weapon acquisition strategy differ for players in different clusters?
 
+The answers to the questionscan be found in the [report](https://github.com/harshbg/PUBG/blob/master/Big%20Data%20Project%20-%20Group%207-%20Final.pdf). 
+
+## Status
+Project is: _finished_
 
 
-#### Final results and analysis [Presentation](https://github.com/harshbg/PUBG/blob/master/Big%20Data%20Project%20-%20Group%207-%20Final.pdf). All the codes used in the analysis can be accesed [here](https://github.com/harshbg/PUBG/tree/master/Code).
+## Contact
+Created by me and my teammates [Siddharth Oza](https://github.com/siddharthoza) and [Devarsh Patel]().
+
+If you loved what you read here and feel like we can collaborate to produce some exciting stuff, or if you
+just want to shoot a question, please feel free to connect with me on <a href="hello@gupta-harsh.com" target="_blank">email</a>, 
+<a href="https://www.linkedin.com/in/harshbg/" target="_blank">LinkedIn</a>, 
+or <a href="https://twitter.com/harshbg" target="_blank">Twitter</a>. 
+My other projects can be found [here](http://www.gupta-harsh.com/projects/).
 
