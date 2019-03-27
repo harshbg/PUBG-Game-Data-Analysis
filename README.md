@@ -14,8 +14,8 @@ The final presentation for the report can be found in [project presentation](htt
 
 ## General info
 
-The goal of the study was to learn data analysis using various big data tools. The professor had allowed us to select the dataset of own choice to analyze.
-All the members of our team were a great fan of PUBG mobile game and the game develeoper had released the data recently on Kaggle. So we decided to take it up for our project, that way we also have an analytics edge when playing the game. 
+The goal of the study was to learn data analysis using various big data tools. The professor had allowed us to select the dataset of our own choice to analyze.
+All the members of our team were a great fan of PUBG mobile game and the game developer had recently released the dataset on Kaggle. So we decided to take it up for our project, that way we also have an analytics edge when playing the game. 
 
 ## Screenshots
 ![Example screenshot](./img/Capture.PNG)
@@ -28,22 +28,11 @@ All the members of our team were a great fan of PUBG mobile game and the game de
 * Spark 
 
 ## Setup
-Describe how to install / setup your local environement / add link to demo version.
 The data for the analysis has been sourced from [Kaggle](https://www.kaggle.com/c/pubg-finish-placement-prediction). 
-All the codes used in the analysis can be accesed [here](https://github.com/harshbg/PUBG/tree/master/Code) and can be used to reproduce the result. 
-A detailed explaination of the various operations and the interpretition of the outputs can be found in the [project report](https://github.com/harshbg/PUBG/blob/master/Big%20Data%20Project%20-%20Group%207-%20Final.pdf).
-
+All the codes used in the analysis can be accessed [here](https://github.com/harshbg/PUBG/tree/master/Code) and can be used to reproduce the result. 
+A detailed explanation of the various operations and the interpretations of the outputs can be found in the [project report](https://github.com/harshbg/PUBG/blob/master/Big%20Data%20Project%20-%20Group%207-%20Final.pdf).
 
 ## Code Examples
-Show examples of usage:
-
-````
-#Descriptive analysis
-set hive.cli.print.header=true;
-select avg(kills) as Average_kills, min(kills) as min_kills, max(kills) as Max_kills, 
-variance(kills) as variance, stddev_pop(kills) as Standard_Deviation, 
-corr(kills,winplaceperc) as Correlation from pubg_new ;
-````
 
 ````
 #Correlation in Hive
@@ -141,14 +130,13 @@ The analysis is focussed on answering questions stated below:
   * How do we catch the cheaters in the game?
   * How does the weapon acquisition strategy differ for players in different clusters?
 
-The answers to the questionscan be found in the [report](https://github.com/harshbg/PUBG/blob/master/Big%20Data%20Project%20-%20Group%207-%20Final.pdf). 
+The answers to the questions can be found in the [report](https://github.com/harshbg/PUBG/blob/master/Big%20Data%20Project%20-%20Group%207-%20Final.pdf). 
 
 ## Status
 Project is: _finished_
 
-
 ## Contact
-Created by me and my teammates [Siddharth Oza](https://github.com/siddharthoza) and [Devarsh Patel]().
+Created by me and my teammates [Siddharth Oza](https://github.com/siddharthoza) and [Devarsh Patel](https://github.com/Devarsh-UTD).
 
 If you loved what you read here and feel like we can collaborate to produce some exciting stuff, or if you
 just want to shoot a question, please feel free to connect with me on <a href="hello@gupta-harsh.com" target="_blank">email</a>, 
