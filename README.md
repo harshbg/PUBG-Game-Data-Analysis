@@ -143,4 +143,3 @@ just want to shoot a question, please feel free to connect with me on <a href="h
 <a href="http://bit.ly/2uOIUeo" target="_blank">LinkedIn</a>, or 
 <a href="http://bit.ly/2CZv1i5" target="_blank">Twitter</a>. 
 My other projects can be found [here](http://bit.ly/2UlyFgC).
-
