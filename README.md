@@ -1,3 +1,6 @@
+[![Language](https://img.shields.io/badge/Made%20with-Hive,%20Spark,%20and%20Scala-blue.svg)](#technologies-and-tools)
+![HitCount](http://hits.dwyl.io/harshbg/PUBG.svg)
+
 # Player Unknown's Battle Grounds (PUBG) Game Data Analysis 
 > An analysis of Player Unknown's Battle Grounds (PUBG) Game Data using Hive and Spark. The project was done as part of Big Data Analysis class at the University of Texas at Dallas.
 The final presentation for the report can be found in [project presentation](https://github.com/harshbg/PUBG/blob/master/Big%20Data%20Project%20-%20Group%207-%20Final.pdf).
@@ -143,3 +146,7 @@ just want to shoot a question, please feel free to connect with me on <a href="h
 <a href="http://bit.ly/2uOIUeo" target="_blank">LinkedIn</a>, or 
 <a href="http://bit.ly/2CZv1i5" target="_blank">Twitter</a>. 
 My other projects can be found [here](http://bit.ly/2UlyFgC).
+
+[![GitHub](https://img.shields.io/github/followers/harshbg.svg?style=social)](http://bit.ly/2HYQaL1)
+[![Twitter](https://img.shields.io/twitter/follow/harshbg.svg?style=social)](http://bit.ly/2VHxROX)
+[![Say Thanks!](https://img.shields.io/badge/Say-Thanks!-yellow.svg)](http://bit.ly/2M0s0Vu)
